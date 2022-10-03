@@ -18,6 +18,7 @@ public class Tank {
     // Физические параметры объекта
     private final Vector2 position = new Vector2();
     private final Vector2 angle = new Vector2();
+    private final Vector2 origin = new Vector2();
     private final float speed = 15f;
 
 
@@ -29,6 +30,7 @@ public class Tank {
         texture = new Texture(textureUrl);
         textureRegion = new TextureRegion(texture);
         position.set(x, y);
+        origin.set(position).add(halfSize, halfSize);
         angle.set(1, 1);
     }
 
@@ -58,10 +60,27 @@ public class Tank {
         if (position.x > Gdx.graphics.getWidth() - size) position.set(Gdx.graphics.getWidth() - size, position.y);
         if (position.y < 0) position.set(position.x, 0);
         if (position.y > Gdx.graphics.getHeight() - size) position.set(position.x, Gdx.graphics.getHeight() - size);
+        origin.set(position).add(halfSize, halfSize);
     }
 
-    public void rotateTo(Vector2 mousePosition){
-        angle.set(mousePosition).sub(position.x + halfSize, position.y + halfSize);
+    public void rotateTo(Vector2 mousePosition) {
+        angle.set(mousePosition).sub(origin);
     }
 
+    public Vector2 getPosition() {
+        return position;
+    }
+
+    public Vector2 getOrigin() {
+        return origin;
+    }
+
+    public void movedTo(float x, float y) {
+        position.set(x, y);
+        origin.set(position).add(halfSize, halfSize);
+    }
+
+    public void rotateTo(float angle) {
+        this.angle.setAngleDeg(angle);
+    }
 }
