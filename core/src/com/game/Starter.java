@@ -9,6 +9,7 @@ import com.game.connection.MessageSender;
 import com.game.controls.InputState;
 import com.game.controls.KeyboardAdapter;
 import com.game.entites.Tank;
+import com.game.particles.Emitter;
 
 public class Starter extends ApplicationAdapter {
     private SpriteBatch batch;
@@ -33,12 +34,26 @@ public class Starter extends ApplicationAdapter {
 
     @Override
     public void render() {
+        float deltaTime = Gdx.graphics.getDeltaTime();
         // Отображение
         ScreenUtils.clear(1, 1, 1, 1);
         batch.begin();
         for (String key : tanks.keys()) {
-            tanks.get(key).render(batch);
+            Tank tank = tanks.get(key);
+
+            InputState inputState = inputProcessor.getInputState();
+            Emitter emitter = tank.emitter;
+            emitter.setAngle(inputState.getAngle());
+            emitter.getPosition().set(tank.getOrigin());
+            if (inputState.isFire()){
+                emitter.start(deltaTime);
+            }
+            emitter.act(deltaTime);
+            emitter.render(batch);
+
+            tank.render(batch);
         }
+
         batch.end();
     }
 

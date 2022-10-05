@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.game.particles.Emitter;
 
 public class Tank {
     // Технические данные объекта
@@ -13,7 +14,7 @@ public class Tank {
 
     private final Texture texture;
     private final TextureRegion textureRegion;
-
+    public final Emitter emitter = new Emitter();
 
     // Физические параметры объекта
     private final Vector2 position = new Vector2();

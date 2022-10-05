@@ -11,6 +11,7 @@ public class KeyboardAdapter extends InputAdapter {
     private Vector2 mousePosition = new Vector2();
     private Vector2 angle = new Vector2(1, 1);
 
+
     private final InputState inputState;
 
     public KeyboardAdapter(InputState inputState) {
@@ -49,7 +50,7 @@ public class KeyboardAdapter extends InputAdapter {
         return false;
     }
 
-    public void updateMousePosition(){
+    public void updateMousePosition() {
         int x = Gdx.input.getX();
         int y = Gdx.graphics.getHeight() - Gdx.input.getY();
         mousePosition.set(x, y);
@@ -71,11 +72,14 @@ public class KeyboardAdapter extends InputAdapter {
         return mousePosition;
     }
 
-    public InputState updateAndGetInputState(Vector2 playerOrigin){
+    public InputState updateAndGetInputState(Vector2 playerOrigin) {
         updateMousePosition();
         angle.set(mousePosition).sub(playerOrigin);
         inputState.setAngle(angle.angleDeg());
         return inputState;
     }
 
+    public InputState getInputState() {
+        return inputState;
+    }
 }
